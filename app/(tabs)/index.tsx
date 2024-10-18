@@ -1,7 +1,7 @@
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Suggested from '../Suggested';
-import Liked from '../Liked';
-import Library from '../Library';
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import Suggested from "../Suggested";
+import Liked from "../Liked";
+import Library from "../Library";
 
 const Tab = createMaterialTopTabNavigator();
 

@@ -9,22 +9,26 @@ export default function Explore() {
           Explore
         </Text>
         <Text className="text-lg text-gray-600 text-center">
-          Discover amazing content
+          Spot potholes, improve roads
         </Text>
       </View>
 
       {/* Category Cards */}
       <View className="flex-1 justify-center items-center space-y-6">
         <TouchableOpacity className="bg-white p-4 w-64 rounded-xl shadow-lg">
-          <Text className="text-lg font-semibold text-blue-600">Trending</Text>
+          <Text className="text-lg font-semibold text-blue-600">
+            Your Submissions
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity className="bg-white p-4 w-64 rounded-xl shadow-lg">
-          <Text className="text-lg font-semibold text-blue-600">New Releases</Text>
+          <Text className="text-lg font-semibold text-blue-600">Heatmap</Text>
         </TouchableOpacity>
 
         <TouchableOpacity className="bg-white p-4 w-64 rounded-xl shadow-lg">
-          <Text className="text-lg font-semibold text-blue-600">Top Picks</Text>
+          <Text className="text-lg font-semibold text-blue-600">
+            Potholes near you
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
