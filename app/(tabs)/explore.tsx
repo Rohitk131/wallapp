@@ -1,36 +1,69 @@
-import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
+import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
+import { useState } from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default function Explore() {
+export default function App() {
+  const [facing, setFacing] = useState<CameraType>('back');
+  const [permission, requestPermission] = useCameraPermissions();
+
+  if (!permission) {
+    // Camera permissions are still loading.
+    return <View />;
+  }
+
+  if (!permission.granted) {
+    // Camera permissions are not granted yet.
+    return (
+      <View style={styles.container}>
+        <Text style={styles.message}>We need your permission to show the camera</Text>
+        <Button onPress={requestPermission} title="grant permission" />
+      </View>
+    );
+  }
+
+  function toggleCameraFacing() {
+    setFacing(current => (current === 'back' ? 'front' : 'back'));
+  }
+
   return (
-    <SafeAreaView className="flex-1 bg-gray-100 p-4">
-      {/* Header */}
-      <View className="mt-10 mb-6">
-        <Text className="text-3xl font-bold text-blue-700 text-center">
-          Explore
-        </Text>
-        <Text className="text-lg text-gray-600 text-center">
-          Spot potholes, improve roads
-        </Text>
-      </View>
-
-      {/* Category Cards */}
-      <View className="flex-1 justify-center items-center space-y-6">
-        <TouchableOpacity className="bg-white p-4 w-64 rounded-xl shadow-lg">
-          <Text className="text-lg font-semibold text-blue-600">
-            Your Submissions
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity className="bg-white p-4 w-64 rounded-xl shadow-lg">
-          <Text className="text-lg font-semibold text-blue-600">Heatmap</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity className="bg-white p-4 w-64 rounded-xl shadow-lg">
-          <Text className="text-lg font-semibold text-blue-600">
-            Potholes near you
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <CameraView style={styles.camera} facing={facing}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
+            <Text style={styles.text}>Flip Camera</Text>
+          </TouchableOpacity>
+        </View>
+      </CameraView>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  message: {
+    textAlign: 'center',
+    paddingBottom: 10,
+  },
+  camera: {
+    flex: 1,
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    margin: 64,
+  },
+  button: {
+    flex: 1,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+});
